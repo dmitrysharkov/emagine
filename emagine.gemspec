@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ["dmitry.sharkov@gmail.com"]
 
   spec.summary = "Event machine on Ruby"
-  spec.description = "Event machine on Ruby"
+  spec.description = "It's my early experiment. Don't watch it. Don't use it :)"
   spec.homepage = "https://github.com/dmitrysharkov/emagine."
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
