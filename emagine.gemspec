@@ -10,11 +10,11 @@ Gem::Specification.new do |spec|
 
   spec.summary = "Event machine on Ruby"
   spec.description = "It's my early experiment. Don't watch it. Don't use it :)"
-  spec.homepage = "https://github.com/dmitrysharkov/emagine."
+  spec.homepage = "https://github.com/gems/emagine"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
+  spec.metadata["allowed_push_host"] = "https://github.com/gems/emagine"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
