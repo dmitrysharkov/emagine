@@ -1,9 +1,10 @@
 module Emagine
   module Runtime
-    class Task
-      class VisibleScope
-        def initialize(procedure, command_index, context, raw_scope)
-
+    class Script
+      class LexicalScope
+        def initialize(context, frame)
+          @context = context
+          @frame = frame
         end
 
         def [](name)

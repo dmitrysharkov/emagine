@@ -9,6 +9,10 @@ module Emagine
         def initialize
           yield self
         end
+
+        def block?
+          false
+        end
       end
     end
   end

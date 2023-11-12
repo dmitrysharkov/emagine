@@ -1,11 +1,10 @@
 module Emagine
   module Runtime
     class Task
-      attr_accessor :id, :state, :stack, :flags, :parent_id, :context
+      attr_accessor :id, :state,  :flags, :parent_id, :context, :script, :stack
 
       def initialize(core, host, id)
-        @core = core
-        @host = host
+        @context = Task::Context.new(core, host)
         @id = id
       end
 
@@ -34,17 +33,8 @@ module Emagine
       end
 
       def init
-        @global_scope = create_global_scope
         snapshot = host.receive_task_exclusivelly(id)
         deserialize(snapshot)
-      end
-
-      def perform_next_frame
-        current_frame = stack.pop
-
-        transition_controller = TransitionControllers.create(task, current_frame)
-        current_frame.run(transition_controller)
-        transition_controller.run_transition
       end
 
       def stack_empty?
@@ -63,6 +53,7 @@ module Emagine
       end
 
       def deserialize(snapshot)
+        @script = Script.new(context, stack)
       end
 
       def hibernate

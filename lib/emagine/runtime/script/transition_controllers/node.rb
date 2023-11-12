@@ -1,12 +1,10 @@
 module Emagine
   module Runtime
-    class Task
+    class Script
       module TransitionControllers
         class Node < Base
-          def call(procedure)
-          end
-
-          def wait(event)
+          def exec(procedure)
+            @transition = Transitions::ExecProcedure.new(procedure: procedure)
           end
         end
       end

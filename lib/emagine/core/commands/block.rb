@@ -34,6 +34,10 @@ module Emagine
             to_enum(:each)
           end
         end
+
+        def block?
+          true
+        end
       end
     end
   end
