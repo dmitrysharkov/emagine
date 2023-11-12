@@ -10,14 +10,14 @@ Gem::Specification.new do |spec|
 
   spec.summary = "Event machine on Ruby"
   spec.description = "It's my early experiment. Don't watch it. Don't use it :)"
-  spec.homepage = "https://github.com/gems/emagine"
+  spec.homepage = "https://rubygems.org/gems/emagine"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
-  spec.metadata["allowed_push_host"] = "https://github.com/gems/emagine"
+  # spec.metadata["allowed_push_host"] = "https://rubygems.org/gems/emagine"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = "https://github.com/dmitrysharkov/emagine"
   spec.metadata["changelog_uri"] = spec.homepage
 
   # Specify which files should be added to the gem when it is released.
@@ -37,4 +37,6 @@ Gem::Specification.new do |spec|
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
+
+  # spec.add_runtime_dependency "zeitwerk", "~> 2.6"
 end
