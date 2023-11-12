@@ -1,7 +1,7 @@
 module Emagine
   module Runtime
-    class Task
-      class Callbacks
+    module Instances
+      class Result < Base
       end
     end
   end

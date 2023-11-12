@@ -13,8 +13,8 @@ module Emagine
         init
 
         while continue?
-          reset_last_result
-          perform_next_instruction
+          # reset_last_result
+          perform_next_frame
           fetch_flags
         end
 
@@ -30,7 +30,7 @@ module Emagine
       attr_reader :result
 
       def continue?
-        !stack.empty? && !error?
+        !signals? && !running? && !stack_empty? && !hibernate?
       end
 
       def init
@@ -39,19 +39,20 @@ module Emagine
         deserialize(snapshot)
       end
 
-      def perform_next_instruction
-        instruction = stack.pop
+      def perform_next_frame
+        current_frame = stack.pop
 
-        transition = instruction.run
-        transition.from = instruction
+        transition_controller = TransitionControllers.create(task, current_frame)
+        current_frame.run(transition_controller)
+        transition_controller.run_transition
+      end
 
-        if transition.transit?
-          stack.push(transition.new_instruction)
-        elsif transition.error?
-          process_error(transition.error)
-        else
-          global_scope.result = transition.result
-        end
+      def stack_empty?
+        stack.empty?
+      end
+
+      def signals?
+        false
       end
 
       def serialize
@@ -65,35 +66,30 @@ module Emagine
       end
 
       def hibernate
-        self.state = error? ? 'error' : 'ready'
-        snapshot = serialize
-        host.save_task(id, snapshot)
+        # self.state = error? ? 'error' : 'ready'
+        # snapshot = serialize
+        # host.save_task(id, snapshot)
       end
 
-      def create_global_scope
-        Scopes::Global.new do |s|
-          s.host = host
-          s.core = core
-          s.expected_event = expected_event
-          s.received_event = received_event
-        end
+      def hibernate?
+        return false if transactional?
+        got_time_left?
       end
 
-      def reset_last_result
-        global_scope.last_error = nil
-        global_scope.last_result = nil
+      def got_time_left?
+        true
       end
 
-      def process_error(error)
-        if error.user?
-          global_scope.last_error = error
-        else
-          global_scope.system_error = error
-        end
-      end
+      # def process_error(error)
+      #   if error.user?
+      #     global_scope.last_error = error
+      #   else
+      #     global_scope.system_error = error
+      #   end
+      # end
 
-      def error?
-        !global_scope.system_error.nil?
+      def running?
+        state == :running
       end
 
       def fetch_flags
