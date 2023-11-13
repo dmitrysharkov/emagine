@@ -4,16 +4,15 @@ module Emagine
       class Base
         attr_reader :coercers, :constraints, :parent_type
 
-        def initializer
+        def initializer(parent_type = nil)
           @coercers = []
           @constraints = []
-          @parent_type = nil
+          @parent_type = parent_type
         end
 
         def coerce(value)
-          if value.is_a?(Types::Base)
-          else
-          end
+          value = coerce_internal_type(value) unless value.is_a?(Types::Base)
+          return value if value.type == self
         end
 
         def coerce_internal_type(value)
@@ -26,8 +25,13 @@ module Emagine
           # end
         end
 
-        def check_concerns(value)
+        def check_constraints(value)
+          constraints.each { |x| x.check(value) }
+          parent_type.check_constraints(value) unless parent_type
+        end
 
+        def extend
+          self.class.new(self)
         end
       end
     end
