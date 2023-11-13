@@ -15,7 +15,7 @@ module Emagine
             if new_child_index < children.length
               controller.ast_step_down(new_child_index) # go to the next child
             else
-              controller.resolve(nil)
+              controller.ast_step_up
             end
           end
         end
