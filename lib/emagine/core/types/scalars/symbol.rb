@@ -1,8 +1,8 @@
 module Emagine
-  module Runtime
-    module Instances
+  module Core
+    module Types
       module Scalars
-        class Date < Base
+        class Symbol < Base
         end
       end
     end

@@ -1,7 +1,7 @@
 module Emagine
-  module Runtime
-    module Instances
-      module Scalars
+  module Core
+    module Types
+      module Json
         class String < Base
         end
       end

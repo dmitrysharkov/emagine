@@ -3,6 +3,7 @@ module Emagine
     module Types
       module Scalars
         class Int < Base
+
         end
       end
     end

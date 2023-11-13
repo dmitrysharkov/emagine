@@ -1,8 +1,9 @@
 module Emagine
   module Core
     module Types
-      class Union < Base
-
+      module Json
+        class Null < Base
+        end
       end
     end
   end
