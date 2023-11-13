@@ -1,0 +1,38 @@
+PUBLIC PACKAGE demo, '0.1.0' DO
+
+    FROM base, '>=1.0.0' IMPORT TPositiveInteger
+    FROM std.datetime AS IS IMPORT DO
+        today
+        period
+
+    FROM std.tasks, '>=1.0.1' AS IS IMPORT oneOf
+
+    FROM std.strings, '>=1.0.0' IMPORT concat
+
+    PUBLIC PROCEDURE ProcSimpleWorkflow DO
+        INTERFACE DO
+            PARAMS CORTEGE DO
+                TUPLE DO
+                    REQUIRED $customerId AS TPositiveInteger
+                STRUCT DO
+                    OPTIONAL $maxMessages AS TPositiveInteger DEFAULT 5
+                    OPTIONAL $daysBetweenMessages AS TPositiveInteger DEFAULT 3
+
+        IMPLEMENTATION DO
+            LET $i = 0
+            WHILE $i < $maxMessages
+                LET $customer = EXEC FetchCustomer($customerId)
+                IF $customer.active
+                    LET $templateName = concat("message-template-", $i + 1)
+
+                    EXEC SendMessageToCustomer($customerId, templateName: $templateName)
+
+                    LET $nextMessageTime = std.datetime.today() + std.datetime.period(days: $daysBetweenMessages)
+
+                    $waitForCustomerStatusChange = OBSERVE EvCustomerStatusChanged($customerId)
+                    $waitForXDays = OBSERVE EvAlarmClock($nextMessageTime)
+
+                    $waitForOne = std.tasks.oneOf($waitForCustomerStatusChange, $waitForXDays)
+
+                    YIELD $waitForOne
+                $i = $i + 1
