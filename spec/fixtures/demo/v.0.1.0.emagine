@@ -20,19 +20,34 @@ PUBLIC PACKAGE demo, '0.1.0' DO
 
         IMPLEMENTATION DO
             LET $i = 0
-            WHILE $i < $maxMessages
-                LET $customer = EXEC FetchCustomer($customerId)
-                IF $customer.active
+            LET $continue = TRUE
+            WHILE ($i < $maxMessages) AND $continue
+                $continue = EXEC ProcFetchCustomer($customerId) MAP filterCustomerState
+                IF $continue
                     LET $templateName = concat("message-template-", $i + 1)
 
-                    EXEC SendMessageToCustomer($customerId, templateName: $templateName)
+                    EXEC ProcSendMessageToCustomer($customerId, templateName: $templateName)
 
                     LET $nextMessageTime = std.datetime.today() + std.datetime.period(days: $daysBetweenMessages)
 
-                    $waitForCustomerStatusChange = OBSERVE EvCustomerStatusChanged($customerId)
-                    $waitForXDays = OBSERVE EvAlarmClock($nextMessageTime)
+                    LET $waitForCustomerStatusChange = OBSERVE EvCustomerStatusChanged($customerId)
+                    LET $waitForXDays = OBSERVE EvAlarmClock($nextMessageTime)
 
-                    $waitForOne = std.tasks.oneOf($waitForCustomerStatusChange, $waitForXDays)
+                    LET $waitForOne = std.tasks.oneOf($waitForCustomerStatusChange, $waitForXDays)
 
                     YIELD $waitForOne
-                $i = $i + 1
+                    $i = $i + 1
+
+            LET x = CORTEGE TUPLE $a, $b, $c STRUCT a: $g, b: $c, c: 10
+
+            LET x = STRUCT[a: $g, b: $c, c: 1]
+
+
+    PRIVATE FUNCTION filterCustomerFields DO
+        INTERFACE DO
+            PARAMS STRUCT $active AS Boolean
+            RETURNS Boolean
+        IMPLEMENTATION
+            RET $active
+
+

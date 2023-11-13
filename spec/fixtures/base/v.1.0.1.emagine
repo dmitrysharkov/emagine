@@ -6,9 +6,9 @@ PUBLIC PACKAGE base, '1.0.1' DO
 
         IMPLEMENTATION
             IF $val > 0
-                RETURN true
+                RET true
             ELSE
-                RETURN false
+                RET false
 
 
     PUBLIC TYPE TPositiveInteger = EXTEND Integer DO

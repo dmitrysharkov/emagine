@@ -2,8 +2,8 @@ module Emagine
   module Core
     module Expressions
       class FunctionCall < Base
-        def initialize(runnable, prams_cortege)
-          @prams_cortege = prams_cortege
+        def initialize(runnable, params)
+          @params = params
           @runnable = runnable
         end
 
