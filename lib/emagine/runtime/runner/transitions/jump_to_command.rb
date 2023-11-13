@@ -10,7 +10,7 @@ module Emagine
           end
 
           def call(stack, current_frame)
-            new_frame = current_frame.fork(:context, :runnable, command_index: command_index)
+            new_frame = current_frame.new_command_frame(command_index)
             stack << new_frame
           end
         end

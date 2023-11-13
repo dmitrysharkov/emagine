@@ -2,9 +2,9 @@ module Emagine
   module Runtime
     class Runner
       module TransitionControllers
-        class Transactional < Node
-          def wait(event)
-            @transition = Transitions::WaitForEvent.new(event: event)
+        class Transactional < Base
+          def exec(runnable)
+            @transition = Transitions::ExecRunnable.new(runnable: runnable)
           end
         end
       end

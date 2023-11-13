@@ -10,7 +10,7 @@ module Emagine
           end
 
           def call(stack, current_frame)
-            new_frame = current_frame.fork(:context, :runnable, :command_index, set_sub_command_to_proceed: true)
+            new_frame = current_frame.proceeding_frame
             stack << new_frame
 
             current_frame.context.new_state = :waiting

@@ -1,22 +1,21 @@
 module Emagine
   module Runtime
     class Runner
-      def initialize(context, stack)
-        @context = context
+      def initialize(stack)
         @stack = stack
       end
 
-      def run
-        step while can_continue?
+      def run(context)
+        step(context) while can_continue?
       end
 
-      def step
+      def step(context)
         current_frame = stack.pop
 
         transition_controller = create_transition_controller(current_frame)
         scope = LexicalScope.new(context, current_frame)
 
-        command.public_send(sub_command, scope, transition_controller)  # by default command.call(...)
+        command.public_send(current_frame.sub_command, scope, transition_controller)  # by default command.call(...)
 
         transition_controller.run_transition
       end
@@ -38,7 +37,7 @@ module Emagine
       end
 
       def block_command?(current_frame)
-        procedure = current_frame.procedure[current_frame.command_index].block?
+        current_frame.runnable.commands[current_frame.command_index].block?
       end
     end
   end

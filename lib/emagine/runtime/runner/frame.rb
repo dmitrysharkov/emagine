@@ -3,42 +3,20 @@ module Emagine
     class Runner
       module Stack
         class Frame
-          ATTRIBUTES = %i(context scope runnable command_index).freeze
-          SETTERS = ATTRIBUTES.map { |k| [k, "#{k}=".to_sym] }.to_h.freeze
-          ALLOWED_SUBCOMMANDS = %i(call pcoceed)
+          attr_reader :runnable, :command_index, :sub_command
 
-          attr_reader :sub_command
-
-          attr_accessor *ATTRIBUTES
-
-          def initialize
-            @scope = {}
-            @sub_command = :call
-            yield self
+          def initialize(runnable, command_index=[0], sub_command = :call)
+            @runnable = runnable
+            @command_index = command_index
+            @sub_command = sub_command
           end
 
-          def fork(*inherit_params, **new_params)
-            new_frame = self.class.new
-
-            inherit_params.each { |k| new_frame[k] = self[name] }
-            new_params.each { |k,v| new_frame[k] = v }
-
-            yield self
-
-            new_frame
+          def proceeding_frame
+            self.class.new(runnable, command_index, :proceed)
           end
 
-          def [](name)
-            public_send(name.to_sym)
-          end
-
-          def []=(name, val)
-            public_send(SETTERS[name.to_sym], val)
-          end
-
-          def set_sub_command_to_proceed(val)
-            @sub_command = :proceed if val
-            val
+          def new_command_frame(command_index)
+            self.class.new(runnable, command_index)
           end
         end
       end
