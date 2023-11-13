@@ -4,7 +4,7 @@ module Emagine
       module TransitionControllers
         class Node < Transactional
           def wait(event)
-            @transition = Transitions::WaitForEvent.new(event: event)
+            @transition = Transitions::WaitForEvent.new(current_frame, event: event)
           end
         end
       end

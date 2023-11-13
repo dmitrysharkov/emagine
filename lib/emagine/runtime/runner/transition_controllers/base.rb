@@ -3,11 +3,9 @@ module Emagine
     class Runner
       module TransitionControllers
         class Base
-          attr_reader :context, :stack, :current_frame, :transition
+          attr_reader :current_frame, :transition
 
-          def initialize(context, stack, current_frame)
-            @context = context
-            @stack = stack
+          def initialize(current_frame)
             @current_frame = current_frame
           end
 
@@ -16,16 +14,12 @@ module Emagine
             ast_step_up
           end
 
-          def run_transition
-            transition.call(:context, stack)
-          end
-
           def ast_step_up
             if current_frame.index.length > 1
               parent_index = current_frame.index[0..-2]
-              @transition = Transitions::JumpToCommand.new(command_index: parent_index)
+              @transition = Transitions::JumpToCommand.new(current_frame, command_index: parent_index)
             else
-              Transitions::None.new
+              Transitions::None.new(current_frame)
             end
           end
         end

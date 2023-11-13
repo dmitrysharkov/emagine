@@ -5,11 +5,12 @@ module Emagine
         class ExecRunnable < Base
           attr_reader :runnable
 
-          def initialize(runnable:)
+          def initialize(current_frame, runnable:)
+            super
             @procedure = runnable
           end
 
-          def call(stack, current_frame)
+          def call(stack)
             caller_frame = current_frame.proceeding_frame
             stack << caller_frame
 

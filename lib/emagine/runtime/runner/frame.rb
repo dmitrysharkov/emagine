@@ -3,12 +3,12 @@ module Emagine
     class Runner
       module Stack
         class Frame
-          attr_reader :runnable, :command_index, :sub_command
+          attr_reader :runnable, :command_index, :action
 
-          def initialize(runnable, command_index=[0], sub_command = :call)
+          def initialize(runnable, command_index=[0], action = :call)
             @runnable = runnable
             @command_index = command_index
-            @sub_command = sub_command
+            @action = action
           end
 
           def proceeding_frame
@@ -17,6 +17,10 @@ module Emagine
 
           def new_command_frame(command_index)
             self.class.new(runnable, command_index)
+          end
+
+          def block_command_frame?
+            runnable.commands[command_index].block?
           end
         end
       end

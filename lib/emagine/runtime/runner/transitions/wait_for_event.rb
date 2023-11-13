@@ -5,11 +5,12 @@ module Emagine
         class WaitForEvent < Base
           attr_reader :event
 
-          def initialize(event:)
+          def initialize(current_frame, event:)
+            super
             @event = event
           end
 
-          def call(stack, current_frame)
+          def call(stack)
             new_frame = current_frame.proceeding_frame
             stack << new_frame
 
