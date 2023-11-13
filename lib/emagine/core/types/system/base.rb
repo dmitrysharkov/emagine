@@ -2,7 +2,7 @@ module Emagine
   module Core
     module Types
       module System
-        class Interface < Base
+        class Base
         end
       end
     end

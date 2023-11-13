@@ -2,10 +2,10 @@ module Emagine
   module Runtime
     module Instances
       class Base
-        attr_reader :declaration, :raw_data
+        attr_reader :type, :raw_data
 
-        def initialize(declaration, **raw_data)
-          @declaration = declaration
+        def initialize(type, raw_data)
+          @type = type
           @raw_data = raw_data
         end
       end

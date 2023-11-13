@@ -1,8 +1,9 @@
 module Emagine
   module Parsers
     class Base
-      def initialize(file)
-
+      attr_reader :path
+      def initialize(path)
+        @path = path
       end
     end
   end

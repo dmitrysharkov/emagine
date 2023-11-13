@@ -1,8 +1,8 @@
 module Emagine
   module Core
     module Types
-      module System
-        class Interface < Base
+      module Scalars
+        class String < Base
         end
       end
     end

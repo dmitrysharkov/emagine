@@ -3,8 +3,8 @@ module Emagine
     class Task
       attr_accessor :id, :state,  :flags, :parent_id, :context, :script, :stack
 
-      def initialize(core, host, id)
-        @context = Task::Context.new(core, host)
+      def initialize(kernel, host, id)
+        @context = Task::Context.new(kernel, host)
         @id = id
       end
 
@@ -53,7 +53,6 @@ module Emagine
       end
 
       def deserialize(snapshot)
-        @script = Script.new(context, stack)
       end
 
       def hibernate

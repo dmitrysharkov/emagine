@@ -2,7 +2,7 @@ module Emagine
   module Runtime
     module Instances
       module Composite
-        class Struct < Base
+        class Base < Instances::Base
         end
       end
     end

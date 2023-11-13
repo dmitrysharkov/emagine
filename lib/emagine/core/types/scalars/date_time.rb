@@ -1,8 +1,8 @@
 module Emagine
   module Core
     module Types
-      module System
-        class Interface < Base
+      module Scalars
+        class DateTime < Base
         end
       end
     end

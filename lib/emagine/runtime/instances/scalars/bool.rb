@@ -1,8 +1,8 @@
 module Emagine
   module Runtime
     module Instances
-      module Composite
-        class Struct < Base
+      module Scalars
+        class Bool < Base
         end
       end
     end

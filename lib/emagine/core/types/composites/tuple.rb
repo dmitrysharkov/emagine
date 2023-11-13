@@ -1,8 +1,8 @@
 module Emagine
   module Core
     module Types
-      module System
-        class Interface < Base
+      module Composites
+        class Tuple < Base
         end
       end
     end
