@@ -53,10 +53,9 @@ PUBLIC MODULE demo, '0.1.0' DO
 
                 $i = $i + 1
 
-        LET x = CORTEGE TUPLE $a, $b, $c STRUCT a: $g, b: $c, c: 10
+        LET x = { $a, $b, $c, a: $g, b: $c, c: 10 }
+        LET y = ['1', '2', '3', '4']
 
-        LET x = STRUCT a: $g, b: $c, c: 1 DO
-            e: ARRAY 1,2,3
 
 
     PRIVATE FUNCTION filterCustomerFields(active AS Boolean) : Boolean DO
