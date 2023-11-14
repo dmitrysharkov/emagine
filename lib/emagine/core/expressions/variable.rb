@@ -2,12 +2,12 @@ module Emagine
   module Core
     module Expressions
       class Variable < Base
-        def initialize(variable)
-          @variable = variable
+        def initialize(name)
+          @name = name.to_sym
         end
 
-        def evaluate(scope)
-          scope.value
+        def evaluate(context)
+          context.lexical_scope[name]
         end
       end
     end

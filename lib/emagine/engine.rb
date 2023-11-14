@@ -12,13 +12,23 @@ module Emagine
     def emit(name, *params, **kwargs)
     end
 
+    def emit_error(name, *params, **kwargs)
+    end
+
+    def delegate(name, *params, **kwargs)
+    end
+
     def start(name, *params, **kwargs)
     end
 
-    def fork(name, *params, **kwargs)
+    def exec(name, *params, **kwargs)
     end
 
-    def exec(name, *params, **kwargs)
+    def rpc_result(id, *params, **kwargs)
+
+    end
+
+    def rpc_error(id, error_name, *params, **kwargs)
     end
 
     def run_task(id)

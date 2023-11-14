@@ -1,15 +1,10 @@
 PUBLIC PACKAGE base, '1.0.1' DO
-    PRIVATE FUNCTION isPositive DO
-        INTERFACE
-            PARAMS TUPLE $val AS Integer
-            RETURNS Integer
-
-        IMPLEMENTATION
-            IF $val > 0
-                RET true
-            ELSE
-                RET false
+    PRIVATE FUNCTION isPositive(val AS Integer) : Integer DO
+        IF @params.val > 0
+            RET true
+        ELSE
+            RET false
 
 
-    PUBLIC TYPE TPositiveInteger = EXTEND Integer DO
-        CONSTRAINT IsPositive
+    PUBLIC TYPE TPositiveInteger INHERITS Integer DO
+        ADD CONSTRAINT IsPositive

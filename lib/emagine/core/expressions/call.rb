@@ -2,23 +2,19 @@ module Emagine
   module Core
     module Expressions
       class FunctionCall < Base
-        def initialize(runnable_proxy , params)
-          @params = params
-          @runnable = runnable
+        attr_reader :callable, :expressions_for_ordered_params, :expressions_for_named_params
+
+        def initialize(callable, *expressions_for_ordered_params, **expressions_for_named_params)
+          @callable = callable
+          @expressions_for_ordered_params = expressions_for_ordered_params
+          @expressions_for_named_params = expressions_for_named_params
         end
 
-        def evaluate(scope)
-          # todo compile time/run time
-          tuple, struct = evaluate_params(scope)
-          runnable.call(*tuple, **struct)
-        end
+        def evaluate(context)
+          ordered_params = expressions_for_ordered_params.map { |x| x.evaluate(context) }
+          named_params = expressions_for_named_params.map { |k, v| [k, v.evaluate(context)] }.to_h
 
-        private
-
-        def evaluate_params(scope)
-          tuple = params_cortege.tuple.map { |x| x.evaluate(scope) }
-          struct = params_cortege.struct.map { |k, v| [k, v.evaluate(scope)] }.to_h
-          [tuple, struct]
+          callable.call(context, *ordered_params, **named_params)
         end
       end
     end
