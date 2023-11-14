@@ -8,9 +8,9 @@ module Emagine
       end
 
       def set(value)
-        coerced_value = type.coerce(value)
-        type.check_concerns(coerced_value)
-        @value = coerced_value
+        # coerced_value = type.coerce(value)
+        # type.check_concerns(coerced_value)
+        # @value = coerced_value
       end
     end
   end

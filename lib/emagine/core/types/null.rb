@@ -1,7 +1,7 @@
 module Emagine
   module Core
     module Types
-      class Nil < Base
+      class Null < Base
 
       end
     end

@@ -2,7 +2,7 @@ module Emagine
   module Core
     module Expressions
       class FunctionCall < Base
-        def initialize(runnable, params)
+        def initialize(runnable_proxy , params)
           @params = params
           @runnable = runnable
         end

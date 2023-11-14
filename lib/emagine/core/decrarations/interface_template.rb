@@ -3,7 +3,7 @@
 module Emagine
   module Core
     module Declarations
-      class Type < Base
+      class InterfaceTemplate < Base
       end
     end
   end

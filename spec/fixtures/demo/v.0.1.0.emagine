@@ -17,6 +17,9 @@ PUBLIC PACKAGE demo, '0.1.0' DO
                 STRUCT DO
                     OPTIONAL $maxMessages AS TPositiveInteger DEFAULT 5
                     OPTIONAL $daysBetweenMessages AS TPositiveInteger DEFAULT 3
+            RETURNS STRUCT
+
+
 
         IMPLEMENTATION DO
             LET $i = 0
@@ -40,7 +43,8 @@ PUBLIC PACKAGE demo, '0.1.0' DO
 
             LET x = CORTEGE TUPLE $a, $b, $c STRUCT a: $g, b: $c, c: 10
 
-            LET x = STRUCT[a: $g, b: $c, c: 1]
+            LET x = STRUCT a: $g, b: $c, c: 1 DO
+                e: ARRAY 1,2,3
 
 
     PRIVATE FUNCTION filterCustomerFields DO

@@ -2,12 +2,18 @@ module Emagine
   module Core
     module Types
       class Base
-        attr_reader :coercers, :constraints, :parent_type
+        attr_accessor :coercers, :constraints
 
-        def initializer(parent_type = nil)
+        def initializer
           @coercers = []
           @constraints = []
-          @parent_type = parent_type
+        end
+
+        def inherit
+          child = self.class.new
+          child.coercers = coercers.dup
+          child.constraints = constraints.dup
+          child
         end
 
         def coerce(value)
@@ -30,8 +36,8 @@ module Emagine
           parent_type.check_constraints(value) unless parent_type
         end
 
-        def extend
-          self.class.new(self)
+        def specify_child(child)
+
         end
       end
     end
