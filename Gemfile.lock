@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     emagine (0.0.0)
+      kpeg
 
 GEM
   remote: https://rubygems.org/
@@ -9,6 +10,7 @@ GEM
     ast (2.4.2)
     diff-lcs (1.5.0)
     json (2.6.3)
+    kpeg (1.3.3)
     language_server-protocol (3.17.0.3)
     parallel (1.23.0)
     parser (3.2.2.4)

@@ -1,0 +1,39 @@
+public singleton package resources {
+    config dbConnectionString:String
+
+    private db = import('std.resources.adapters').configure({dbConnectionString})
+    private resources = import('std.resources').configure(db)
+
+    public Products =
+        resources.create('products')
+            .attr('name', String)
+            .attr('description', String)
+            .attr('pictureUrl', String)
+        .belongsTo('category')
+        .emits('create' | 'update' | 'delete')
+        .validates('create', createProductValidator)
+        .validates('create' | 'update', changeProductValidator)
+
+    public Categories =
+        resources.create('categories')
+            .attr('name', String)
+            .attr('description', String)
+            .attr('pictureUrl', String)
+        .hasMany('products')  # relations
+        .hasMany('topProducts', 'products', top: true) # specific relations
+
+    public OrderStatus = "new" | "processing" | "done"
+    public Order =
+        resources.create('orders', db)
+            .attr('datetime', Datetime)
+            .attr('status', OrderStatus)
+        .belongsTo('products')
+        .belongsTo('customers');
+
+    private emailRegexp = "...."
+    private Customer = Type.create(
+        id: Integer,
+        email: Email,
+        password: String.constraintRegexp(emailRegexp)
+    );
+}

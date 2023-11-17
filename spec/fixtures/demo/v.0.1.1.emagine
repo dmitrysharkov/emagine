@@ -1,0 +1,42 @@
+package demo@1.1.1 {
+
+  private isActive := Customer.predicate.state.eq('active')
+  private customerId := config('customerId', int)
+
+  private templateForMessage := function(n:int){
+    return "message-template-{{ n + 1 }}"
+  }
+
+  private nextMessageTime := function(daysBetween: int) {
+    return dt.today() + dt.period(days: daysBetweenMessages);
+  }
+
+  public SimpleWorkflowProc := routine@1.0.1(customerId: int; maxMessages := 10; daysBetweenMessages := 3) {
+    var i := 0
+    var continue := true
+
+    while((i < maxMessages) && continue) {
+      continue = customer.reduce(isActive).call()
+
+      if(continue) {
+        exec sendMessageToCustomer({customerId, templateName: templateForMessage(i)})
+
+        const observeStatus := delegate customer.StatusChangedEvent(customerId)
+        const observeAlarm := delegate clock.AlarmEvent(nextMessageTime(daysBetween: int))
+
+        await tasks.oneOf($waitForCustomerStatusChange, $waitForXDays)
+
+        set $i := $i + 1
+      }
+    }
+  }
+
+  private creditorCaseFilesFilter := CreditorCaseFileView.predicate.companyId.eq(auth.currenUserCompanyId)
+  private creditorCaseFilesMap := CaseFileView.map(CreditorCaseFileView)
+
+  public function GetCreditorCaseFiles():[CreditorCaseFileView] {
+    return CaseFiles.filter(creditorCaseFilesFilter).map(creditorCaseFilesMap).call()
+  }
+
+  public
+}

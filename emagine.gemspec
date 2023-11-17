@@ -39,4 +39,5 @@ Gem::Specification.new do |spec|
   # guide at: https://bundler.io/guides/creating_gem.html
 
   # spec.add_runtime_dependency "zeitwerk", "~> 2.6"
+  spec.add_runtime_dependency "kpeg"
 end

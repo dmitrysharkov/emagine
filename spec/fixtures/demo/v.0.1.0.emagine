@@ -1,11 +1,11 @@
-PUBLIC MODULE demo, '0.1.0' DO
+PUBLIC PACKAGE demo, '0.1.0' DO
 
-    IMPORT base, '>=1.0.0'
-    IMPORT std.datetime, '>=1.0.1' AS dt
-    IMPORT std.tasks, '>=1.0.1' AS tasks
-    IMPORT std.strings, '>=1.0.0' AS str
-    IMPORT std.regexp AS re
-    IMPORT std.arrays AS arr
+    PRIVATE IMPORT base, '>=1.0.0'
+    PRIVATE IMPORT std.datetime, '>=1.0.1' AS dt
+    PRIVATE IMPORT std.tasks, '>=1.0.1' AS tasks
+    PRIVATE IMPORT std.strings, '>=1.0.0' AS str
+    PRIVATE IMPORT std.regexp AS re
+    PRIVATE IMPORT std.arrays AS arr
 
     ALIAS base.TPositiveInteger AS TPositiveInteger
 

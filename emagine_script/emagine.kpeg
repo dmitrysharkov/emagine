@@ -1,0 +1,44 @@
+%% name = Emagine::Parser
+alpha = /[A-Z]/ | /[a-z]/
+
+space-char = ' '
+space = space-char+
+
+keyword-package = "PACKAGE"
+keyword-procedure = "PROCEDURE"
+keyword-function= "FUNCTION"
+keyword-json = "JSON"
+
+
+keyword-lambda = "LAMBDA"
+keyword-while = "WHILE"
+keyword-if = "IF"
+keyword-elsif "ELSE IF"
+keyword-else "ELSE"
+keyword-let "LET"
+keyword-set "SET"
+
+
+not-a-keyword = !keyword
+
+invalid-keyword(num) = indent(num) not-a-keyword
+
+do = "DO \n"
+
+package-declaration = package-header do package-body
+
+indent(num) = <.> &{ text.starts_with(' ' * (4*num)) }
+
+invalid-start(num) = (invalid-ident(num) | indent(num) invalid-keyword)
+
+
+package-body = (procedure-declaration | function-declaration | task-declaration | invalid-start(num))
+package-body = (valid-package-body | invalid-start(1))
+
+
+
+keyword = (package-keyword | procedure-keyword | function-keyword)
+
+
+procedure-declaration = procedure-header do procedure-body
+procedure-header = indent(1) procedure-keyword
